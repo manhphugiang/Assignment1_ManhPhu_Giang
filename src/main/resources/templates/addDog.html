@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Dog</title>
+    <link rel="stylesheet" href="./css/addDog.css">
+</head>
+<body>
+	
+	
+    <h2>Add Dog</h2>
+    <form th:action="@{/addDog}" th:object="${dog}" method="post">
+		<input type="text" name="dogName" placeholder="Dog Name" required>
+        <br>
+        <button type="submit">Add Dog</button>
+    </form>
+
+	
+	
+	<h1>Navigation</h1>
+	   <a href="/"><button>Home</button></a>
+	   <a href="/addJudge"><button>Add Judge</button></a>
+	   <a href="/addDog"><button>Add Dog</button></a>
+	   <a href="/addOwner"><button>Add Owner</button></a>
+	   <a href="/assignJudgeToDog"><button>Assign Judge to Dog</button></a>
+	   <a href="/assignOwnerToDog"><button>Assign Owner to Dog</button></a>
+	   <a href="/view"><button>View</button></a>
+   </body>
+</html>

@@ -1,0 +1,75 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Guest</title>
+    <link rel="stylesheet" href="./css/addGuest.css">
+</head>
+
+<body>
+
+
+<h1>Owners List</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="owner : ${ownerList}">
+            <td th:text="${owner.firstName}"></td>
+            <td th:text="${owner.lastName}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<h1>Dogs List</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Dog Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="dog : ${dogList}">
+           <td> <a th:href="@{/view/{id}(id=${dog.id})}" th:text="${dog.dogName}"></a></td>
+        </tr>
+    </tbody>
+</table>
+     
+<h1>Judges List</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Judge Name</th>
+            <th>Judging Dogs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="judge : ${judgeList}">
+            <td th:text="${judge.judgeName}"></td>
+            <td>
+                <ul>
+                    <li th:each="dog : ${judge.dogs}" th:text="${dog.dogName}"></li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<h1>Navigation</h1>
+   <a href="/"><button>Home</button></a>
+   <a href="/addJudge"><button>Add Judge</button></a>
+   <a href="/addDog"><button>Add Dog</button></a>
+   <a href="/addOwner"><button>Add Owner</button></a>
+   <a href="/assignJudgeToDog"><button>Assign Judge to Dog</button></a>
+   <a href="/assignOwnerToDog"><button>Assign Owner to Dog</button></a>
+   <a href="/view"><button>View</button></a>
+  </body>
+</html>
