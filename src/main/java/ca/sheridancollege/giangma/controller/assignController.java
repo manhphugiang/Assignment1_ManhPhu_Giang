@@ -77,6 +77,7 @@ public class assignController {
 	    
 	    
 	    arrggsssss the assignment document not telling me that if I can override owner or not 
+	    this takes a lot of time argsssssss
 	*/    
 	    //save the owner
 	    for (Dog dog : dogs) {

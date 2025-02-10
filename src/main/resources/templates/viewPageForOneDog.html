@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Dog Details</title>
+</head>
+	<body>
+
+	    <h2>Dog Details</h2>
+
+	    <p>Name: <span th:text="${dogDetail.dogName}"></span></p>
+
+	    <p>Owner:
+	        
+			<span th:if="${dogDetail.owner != null}">
+				<span th:text="${dogDetail.owner.firstName + ' ' + dogDetail.owner.lastName}"></span>
+	        </span>
+			
+			<span th:if="${dogDetail.owner == null}">No owner assigned yet</span>
+	    </p>
+
+	    <h3>Judges:</h3>
+		<table border="1">
+	    <tr th:each="judge : ${dogDetail.judges}">
+	        <td th:text="${judge.judgeName}">a</td>
+			<td> 
+				<a th:href="@{/deleteJudge/{dogId}/{judgeId}(dogId=${dogDetail.id}, judgeId=${judge.id})}">
+				    Delete
+				</a>
+			</td> 
+	    </tr>
+	    <p th:if="${dogDetail.judges == null or dogDetail.judges.isEmpty()}">No judges assigned yet</p>
+		</table>
+
+	
+	
+	</body>
+
+	
+	
+	<h1>Navigation</h1>
+	   <a href="/"><button>Home</button></a>
+	   <a href="/addJudge"><button>Add Judge</button></a>
+	   <a href="/addDog"><button>Add Dog</button></a>
+	   <a href="/addOwner"><button>Add Owner</button></a>
+	   <a href="/assignJudgeToDog"><button>Assign Judge to Dog</button></a>
+	   <a href="/assignOwnerToDog"><button>Assign Owner to Dog</button></a>
+	   <a href="/view"><button>View</button></a>
+	   
+	   
+</html>

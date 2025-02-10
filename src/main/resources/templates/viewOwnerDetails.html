@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Details</title>
+</head>
+<body>
+
+    <h2 th:text="${ownerDetail.firstName} + ' ' + ${ownerDetail.lastName} + ' Dog Detail'"></h2>
+	
+	   
+		<table border="1">
+			<tr>
+			    <th>Dog Name</th>
+				<th>Judge Name</th>
+			</tr>
+			
+			<tr th:each="dog : ${ownerDetail.dogs}">
+			    <td th:text="${dog.dogName}">a</td>
+				<td th:each="judge : ${dog.judges}" th:text="${judge.judgeName}"></td>
+			</tr>
+
+		
+	
+	</table>
+
+
+
+</body>
+
+<h1>Navigation</h1>
+<a href="/"><button>Home</button></a>
+<a href="/addJudge"><button>Add Judge</button></a>
+<a href="/addDog"><button>Add Dog</button></a>
+<a href="/addOwner"><button>Add Owner</button></a>
+<a href="/assignJudgeToDog"><button>Assign Judge to Dog</button></a>
+<a href="/assignOwnerToDog"><button>Assign Owner to Dog</button></a>
+<a href="/view"><button>View</button></a>
+
+</html>

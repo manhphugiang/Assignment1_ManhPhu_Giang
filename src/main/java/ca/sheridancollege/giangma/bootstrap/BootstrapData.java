@@ -53,14 +53,29 @@ public class BootstrapData implements CommandLineRunner {
 	        
 	        
 	        
-	        dogRepo.saveAll(Arrays.asList(d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12));
+	        dogRepo.save(d1);
+	        dogRepo.save(d2);
+	        dogRepo.save(d3);
+	        dogRepo.save(d4);
+	        dogRepo.save(d5);
+	        dogRepo.save(d6);
+	        dogRepo.save(d7);
+	        dogRepo.save(d8);
+	        dogRepo.save(d9);
+	        dogRepo.save(d10);
+	        dogRepo.save(d11);
+	        dogRepo.save(d12);
+	        
 
 	        
 	        Judge j1 = Judge.builder().judgeName("Nick Fury").dogs(Arrays.asList(d1, d2, d3, d4)).build();
 	        Judge j2 = Judge.builder().judgeName("Stan Lee").dogs(Arrays.asList(d5, d6, d7, d8)).build();
 	        Judge j3 = Judge.builder().judgeName("Aunt May").dogs(Arrays.asList(d9, d10, d11, d12)).build();
 	       
-	        judgeRepo.saveAll(Arrays.asList(j1, j2, j3));
+	        judgeRepo.save(j1);
+	        judgeRepo.save(j2);
+	        judgeRepo.save(j3);
+	        
 	    }
 	
 }
