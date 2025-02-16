@@ -4,37 +4,13 @@
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>Assign Judge To Dog</title>
+		<link rel="stylesheet" type="text/css" href="/css/root.css">
+
 	</head>
 	
 <body>
     
 
-	<!-- 
-
-	<h2>Assign Owner To Dog</h2>
-	<form th:action="@{/assignOwnerToDog}" method="post">
-	    <label>Select The Owner:</label>
-	    <select name="ownerId" required>
-	        <option th:each="owner : ${ownerList}" th:value="${owner.id}" th:text="${owner.FirstName} + ' ' +  ${owner.lastName}"></option>
-	    </select>
-	    
-	    <br>
-	    
-	    <label>Select Dogs to Judge:</label>
-	    <div th:each="dog : ${dogList}">
-	        <input type="checkbox" name="dogIds" th:value="${dog.id}">
-	        <label th:text="${dog.dogName}"></label>
-	    </div>
-	    
-	    <br>
-	    <button type="submit">Assign Judge To Dog</button>
-	</form>
-	
-	arrggsssss the assignment document not telling me that if I can override owner or not 
-
-
--->
-	
 	
 	<h2>Assign Owner To Dog</h2>
 	<form th:action="@{/assignOwnerToDog}" method="post">
@@ -45,16 +21,35 @@
 	    
 	    <br>
 	    
-	    <label>Select Dogs to Judge:</label>
-		<div th:each="dog : ${dogList}">
-		    <div th:if="${dog.owner == null}">
-		        <input type="checkbox" name="dogIds" th:value="${dog.id}">
-		        <label th:text="${dog.dogName}"></label>
+
+		<label>Select Dogs to Judge:</label>
+
+		<div th:if="${#lists.size(dogList) > 0}">
+		    <div th:each="dog : ${dogList}">
+		        <div th:if="${dog.owner == null}">
+		            <input type="checkbox" name="dogIds" th:value="${dog.id}" required>
+		            <label th:text="${dog.dogName}"></label>
+		        </div>
 		    </div>
+		    
+		    <br>
+		    <button type="submit">Assign Owner To Dog - I can't do error handler if there is no dog seleted</button>
 		</div>
-	    
-	    <br>
-	    <button type="submit">Assign Judge To Dog</button>
+
+
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+				<div th:if="${#lists.size(dogList) == 0}">
+		    <p style="color: red; font-weight: bold;">No available dogs to assign.</p>
+		</div>
 	</form>
 
 	

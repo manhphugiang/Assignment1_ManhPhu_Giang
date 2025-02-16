@@ -48,11 +48,42 @@ public class assignController {
 	public String selectJudge(@RequestParam int judgeId, Model model) {
 	    Judge selectedJudge = judgeRepo.findById(judgeId).orElse(null);
 
-	    List<Dog> unassignedDogs = dogRepo.findAll()
-	    	    .stream()
-	    	    .filter(dog -> dog.getJudges() == null || dog.getJudges().stream().noneMatch(j -> j.getId().equals(judgeId)))
-	    	    .toList();
+	    
+	    
+	 // get all dogs 
+	    List<Dog> allDogs = dogRepo.findAll();
 
+	    List<Dog> unassignedDogs = new ArrayList<>();
+
+	    // loop through each dog to check if it is assigned to the selected judge
+	    for (Dog dog : allDogs) {
+	        
+	        List<Judge> assignedJudges = dog.getJudges();
+
+	        // if the dog has no judges, it is unassigned and should be added to the list
+	        if (assignedJudges == null || assignedJudges.isEmpty()) {
+	            unassignedDogs.add(dog);
+	            continue;
+	        }
+
+	        boolean isAssigned = false;
+
+	        // check if each judge assigned to the dog
+	        for (Judge judge : assignedJudges) {
+	            if (judge.getId().equals(judgeId)) {
+	                isAssigned = true; 
+	                break;
+	            }
+	        }
+
+	        // if the dog is not assigned to the selected judge, add it to the list
+	        if (!isAssigned) {
+	            unassignedDogs.add(dog);
+	        }
+	    }
+
+	    
+	    
 
 	    model.addAttribute("judgeList", judgeRepo.findAll());
 	    model.addAttribute("dogList", unassignedDogs);
@@ -96,29 +127,23 @@ public class assignController {
 	}
 	
 	@PostMapping("/assignOwnerToDog")
-	public String procesAassignOwnerToDog(@RequestParam int ownerId, @RequestParam List<Integer> dogIds) {
-	    Owner owner = ownerRepo.findById(ownerId)
+	public String procesAassignOwnerToDog(@RequestParam int ownerId, @RequestParam List<Integer> dogIds, Model model) {
+	    
+		
+		//error handler
+	    if (dogIds == null || dogIds.isEmpty()) {
+	        model.addAttribute("error", "You must select at least one dog.");
+	        return "assignOwnerToDog"; // Return the same form page with an error message
+	    }
+		
+		
+		
+		Owner owner = ownerRepo.findById(ownerId)
 	    		.orElseThrow(() -> new RuntimeException("Owner not found"));
 	    
 	    List<Dog> dogs = dogRepo.findAllById(dogIds);
 	    
-/*	  //  System.out.println(dogs);
-	    //delete the previous owner of the selected dog
-	    for (Dog dog : dogs) {
-	        dog.setOwner(null); 
-	    }
-	    //set the dog
-	    // assign the new owner for the dog
-	    for (Dog dog : dogs) {
-	        dog.setOwner(owner);
-	    }
-	    
-	    dogRepo.saveAll(dogs);
-	    
-	    
-	    arrggsssss the assignment document not telling me that if I can override owner or not 
-	    this takes a lot of time argsssssss
-	*/    
+
 	    //save the owner
 	    for (Dog dog : dogs) {
 	        dog.setOwner(owner);
