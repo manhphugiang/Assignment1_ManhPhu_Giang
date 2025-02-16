@@ -8,26 +8,20 @@
 	
 <body>
     
-
+	
+	
 
 	<h2>Assign Judge To Dog</h2>
-	<form th:action="@{/assignJudgeToDog}" method="post">
+	<form th:action="@{/selectJudge}" method="post">
 	    <label>Select The Judge:</label>
 	    <select name="judgeId" required>
 	        <option th:each="judge : ${judgeList}" th:value="${judge.id}" th:text="${judge.judgeName}"></option>
 	    </select>
-	    
+		<button type="submit">Confirm Judge</button>
+		</form>
+
 	    <br>
 	    
-	    <label>Select Dogs to Judge:</label>
-	    <div th:each="dog : ${dogList}">
-	        <input type="checkbox" name="dogIds" th:value="${dog.id}">
-	        <label th:text="${dog.dogName}"></label>
-	    </div>
-	    
-	    <br>
-	    <button type="submit">Assign Judge To Dog</button>
-	</form>
 	
 	
 <h1>Navigation</h1>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Dogs to Judge</title>
+</head>
+<body>
+
+    <h1>Assign Dogs to <span th:text="${selectedJudge.judgeName}"></span></h1>
+
+		<form th:action="@{/assignJudgeToDog}" method="post">
+			
+		<input type="hidden" name="judgeId" th:value="${selectedJudge?.id}">
+
+	    <label>Select Dogs to Judge:</label>
+	    <div th:each="dog : ${dogList}">
+	        <input type="checkbox" name="dogIds" th:value="${dog.id}">
+	        <label th:text="${dog.dogName}"></label>
+	    </div>
+	    
+	    <br>
+	    <button type="submit">Assign Judge To Dog</button>
+	</form>
+
+	<h1>Navigation</h1>
+	   <a href="/"><button>Home</button></a>
+	   <a href="/addJudge"><button>Add Judge</button></a>
+	   <a href="/addDog"><button>Add Dog</button></a>
+	   <a href="/addOwner"><button>Add Owner</button></a>
+	   <a href="/assignJudgeToDog"><button>Assign Judge to Dog</button></a>
+	   <a href="/assignOwnerToDog"><button>Assign Owner to Dog</button></a>
+	   <a href="/view"><button>View</button></a>
+</body>
+</html>

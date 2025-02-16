@@ -30,7 +30,6 @@ public class Dog {
 	@JoinColumn(name = "OWNER_ID")
 	private Owner owner;
 
-
 	@ManyToMany(mappedBy="dogs")
 	private List<Judge> judges;
 	

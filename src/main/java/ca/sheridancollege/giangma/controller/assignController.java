@@ -1,5 +1,6 @@
 package ca.sheridancollege.giangma.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -33,16 +34,55 @@ public class assignController {
 		return "assignJudgeToDog.html";
 	}
 	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	//select judge button 
+	@PostMapping("/selectJudge")
+	public String selectJudge(@RequestParam int judgeId, Model model) {
+	    Judge selectedJudge = judgeRepo.findById(judgeId).orElse(null);
+
+	    List<Dog> unassignedDogs = dogRepo.findAll()
+	    	    .stream()
+	    	    .filter(dog -> dog.getJudges() == null || dog.getJudges().stream().noneMatch(j -> j.getId().equals(judgeId)))
+	    	    .toList();
+
+
+	    model.addAttribute("judgeList", judgeRepo.findAll());
+	    model.addAttribute("dogList", unassignedDogs);
+	    model.addAttribute("selectedJudge", selectedJudge);
+
+	    return "assignDogToSelectedJudge.html";
+	}
+
+	
+	
+	
+	
 	@PostMapping("/assignJudgeToDog")
 	public String processAssignJudgeToDog(@RequestParam int judgeId, @RequestParam List<Integer> dogIds) {
 	    Judge judge = judgeRepo.findById(judgeId)
 	    		.orElseThrow(() -> new RuntimeException("Judge not found"));
 	    
-	    List<Dog> dogs = dogRepo.findAllById(dogIds);
-	    
-	    
-	    judge.setDogs(dogs); 
+	    List<Dog> newDogs = dogRepo.findAllById(dogIds);
+	    List<Dog> currentDogs = new ArrayList<>(judge.getDogs()); // Copy existing assigned dogs
+
+	    for (Dog dog : newDogs) {
+	        if (!currentDogs.contains(dog)) { // Prevent duplicate assignments
+	            currentDogs.add(dog);
+	        }
+	    }
+
+	    judge.setDogs(currentDogs);
 	    judgeRepo.save(judge);
+
+	    
 	    return "redirect:/assignJudgeToDog";
 	}
 	
